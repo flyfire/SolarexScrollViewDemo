@@ -68,14 +68,12 @@ public class SolarexScrollView extends ViewGroup {
             case MotionEvent.ACTION_DOWN:
                 mLastY = y;
                 mStart = getScrollY();
-                Log.d("Solarex", "down: y: " + mLastY + ",mStart: " + mStart);
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!mScroller.isFinished()){
                     mScroller.abortAnimation();
                 }
                 int dY = mLastY - y;
-                Log.d("Solarex", "move: dY = " + dY + ",y = " + y + ",scrollY = " + getScrollY() + ",getHeight = " + getHeight());
                 if (getScrollY() < 0) {
                     dY = 0;
                 }
@@ -86,44 +84,19 @@ public class SolarexScrollView extends ViewGroup {
                 mLastY = y;
                 break;
             case MotionEvent.ACTION_UP:
-//                int dScrollY = checkAlignment();
-//                Log.d(TAG, "up | dScrollY = " + dScrollY + ",scrollY = " + getScrollY());
-//                if (dScrollY > 0){
-//                    if (dScrollY < mScreenHeight/3){
-//                        Log.d(TAG, "1");
-//                        mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
-//                    } else {
-//                        Log.d(TAG, "2");
-//                        mScroller.startScroll(0, getScrollY(), 0, mScreenHeight - dScrollY);
-//                    }
-//                } else {
-//                    if (-dScrollY < mScreenHeight/3){
-//                        Log.d(TAG, "3");
-//                        mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
-//                    } else {
-//                        Log.d(TAG, "4");
-//                        mScroller.startScroll(0, getScrollY(), 0, -mScreenHeight-dScrollY);
-//                    }
-//                }
                 int mEnd = getScrollY();
-                Log.d("Solarex", "scrollY = " + mEnd);
                 boolean isUp = (mEnd - mStart) > 0 ? true : false;
                 int dScrollY = mEnd - mStart;
-                Log.d("Solarex", "dScrollY = " + dScrollY + ",isUp = " + isUp);
                 if (isUp){
                     if (dScrollY < mScreenHeight/3){
-                        Log.d("Solarex", "1");
                         mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
                     } else {
-                        Log.d("Solarex", "2");
                         mScroller.startScroll(0, getScrollY(), 0, mScreenHeight - dScrollY);
                     }
                 } else {
                     if (-dScrollY < mScreenHeight/3){
-                        Log.d("Solarex", "3");
                         mScroller.startScroll(0, getScrollY(), 0, -dScrollY);
                     } else {
-                        Log.d("Solarex", "4");
                         mScroller.startScroll(0, getScrollY(), 0, -mScreenHeight-dScrollY);
                     }
                 }
@@ -138,7 +111,6 @@ public class SolarexScrollView extends ViewGroup {
         super.computeScroll();
         if (mScroller.computeScrollOffset()){
             int y = mScroller.getCurrY();
-            Log.d("Solarex","currY = " + y);
             scrollTo(0, y);
             postInvalidate();
         }
@@ -151,22 +123,6 @@ public class SolarexScrollView extends ViewGroup {
         windowManager.getDefaultDisplay().getMetrics(displayMetrics);
         mScreenHeight = displayMetrics.heightPixels;
         mScroller = new Scroller(context);
-        Log.d("Solarex", "initView:mScreenHeight = " + mScreenHeight);
     }
 
-//    private int checkAlignment(){
-//        mEnd = getScrollY();
-//        boolean isUp = ((mEnd - mStart) > 0) ? true : false;
-//        Log.d("Solarex", "UP: scrollY = " + mEnd + ",isUp = " + isUp);
-//        int result = 0;
-//        int lastPrev = mEnd % mScreenHeight;
-//        int lastNext = mScreenHeight - lastPrev;
-//        if (isUp){
-//            result = lastPrev;
-//        } else {
-//            result = -lastNext;
-//        }
-//        Log.d("Solarex", "UP: result = " + result);
-//        return result;
-//    }
 }
